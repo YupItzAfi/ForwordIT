@@ -5,11 +5,11 @@ class Some:
         self.somenum = somenum
 
     def sayNum(self, somenum=somenum):
-        print(Some.somenum)
+        print(somenum)
 
     def printSomenum(self):
         return self
 
 
 d = Some(101)
-d.sayNum("Something")
+d.sayNum("Someihugvtse")
