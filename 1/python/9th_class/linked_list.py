@@ -11,7 +11,7 @@ class Linked_List:
     def print(self):
         temp = self.head
         while temp:
-            print(temp.data)
+            print(temp.data, end=" ")
             temp = temp.next
 
     def push(self, new_data):
@@ -27,16 +27,43 @@ class Linked_List:
         new_node.next = prev_data.next
         prev_data.next = new_node
 
+    def deleteNode(self, data):
+        temp = self.head
+
+        if temp is not None:
+            if temp.data == data:
+                self.head = temp.head
+                temp = None
+                return
+        while temp is not None:
+            if temp.data == data:
+                break
+            prev = temp
+            temp = temp.next
+
+        if temp == None:
+            return
+        prev.next = temp.next
+        temp = None
+
 
 lst = Linked_List()
-lst.head = Node(10)
-sec = Node(20)
-third = Node(30)
+# lst.head = Node(10)
+# sec = Node(20)
+# third = Node(30)
 
-lst.head.next = sec
-sec.next = third
-lst.insertAfterNode(sec, 200)
+# lst.head.next = sec
+# sec.next = third
+lst.push(10)
+lst.push(20)
+lst.push(30)
+lst.push(40)
+lst.push(50)
+lst.push(60)
+lst.push(70)
+lst.push(80)
+lst.push(10)
 
-lst.push(87967)
 
 lst.print()
+lst.deleteNode(80)
