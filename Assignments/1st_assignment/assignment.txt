@@ -1,0 +1,39 @@
+1. write small numbers from input to output. Stop processing input after reading in the number 42.
+All numbers at input are integers of one or two digits.
+
+Input: 
+1
+2
+88
+42
+99
+
+Output:
+1
+2
+88
+
+2. You're given an integer N. Write a program to calculate the sum of all the digits of N.
+Input
+The first line contains an integer T, the total number of testcases. Then follow T lines, each line contains an integer N.
+Output
+For each test case, calculate the sum of digits of N, and display it in a new line.
+
+Input
+3 
+12345
+31203
+2123
+Output
+15
+9
+8
+
+3. Write a short program that prints each number from 1 to 100 on a new line. 
+
+For each multiple of 3, print "Fizz" instead of the number. 
+
+For each multiple of 5, print "Buzz" instead of the number. 
+
+For numbers which are multiples of both 3 and 5, print "FizzBuzz" instead of the number.
+

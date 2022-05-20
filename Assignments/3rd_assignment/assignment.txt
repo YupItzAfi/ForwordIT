@@ -1,0 +1,15 @@
+Make a banking system, 
+
+model name - customer
+class name- customer, customer implementation,
+
+customer and customer impl class attr name - name, age, nid, address
+
+model name - accounts
+class name - savings accounts
+
+savings account attr name - account number, opening balance, deposit, widthdraw,
+
+
+system requirements - customer save their info, open a savings account, 
+can see ther balance, widthdraw, add deposit money and update main balance.
