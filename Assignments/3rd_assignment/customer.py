@@ -1,12 +1,17 @@
+from accounts import SavingsAccount
+
+
 class Customer:
     name = ""
     age = 18
     nid = 0
     address = ""
+    __balance = 0
 
     # Other Variables
 
     temp1, temp2, temp3, temp4 = "", 18, 0, ""
+    __savingsAcc = None
 
     def __init__(self, name, age, nid, address):
         if age < 18:
@@ -23,19 +28,26 @@ class Customer:
             self.__command_enterer()
 
     def __CommandsManager(self, command=""):
-        if command.lower() == 'help':
+        if command == "":
+            print("There is no Command")
+
+        elif command.lower() == 'help':
             print("""
 === Bank Account Management System Help ===
-help                --  This Help Window.
-update info            --  Updates Your Info to a new one.
-create savings account --  Create a Savings Account.
-revert info            --  Revert your Changed Info.
-show info              --  Shows your Bank Account Details such as current balance, NID and name.
-delete account         --  Deletes your Account.
-exit                   --  Exits The Application.
+    help                   --  This Help Window.
+    update info            --  Updates Your Info to a new one.
+    create savings account --  Create a Savings Account.
+    revert info            --  Revert your Changed Info.
+    show info              --  Shows your Bank Account Details such as current balance, NID and name.
+    deposit                --  Deposits your money to your Account.
+    deposit savings        --  Deposits money to your Savings Account
+    withdraw               --  Withdraws your money.
+    withdraw savings       --  Withdraws from your Saving Account.
+    delete account         --  Deletes your Account.
+    exit                   --  Exits The Application.
 """)
 
-        if command.lower() == 'update info':
+        elif command.lower() == 'update info':
             print("Update Your Info, Enter your New Details below:")
             for i in range(4):
                 if i == 1:
@@ -48,56 +60,90 @@ exit                   --  Exits The Application.
                     self.address = str(input("Enter your New Address: "))
             print(
                 "Your Account Information Updated Succesfully! To Revert Action Type 'revert info'")
-            return
 
-        if command.lower() == 'create savings account':
-            from accounts import SavingsAccount
-            global __savingsAcc
-            __savingsAcc = SavingsAccount()
-            return
-
-        if command.lower() == 'revert info':
+        elif command.lower() == 'create savings account':
+            if self.__balance < 10000:
+                print(
+                    f"You don't have enough balance on your account to open a savings account. Required Minimum = 10,000 BDT, Your Balance = {self.__balance}")
+            else:
+                amount = int(
+                    input("Enter how much you want as the opening amount: "))
+                self.__balance -= amount
+                self.__savingsAcc = SavingsAccount(amount)
+        elif command.lower() == 'revert info':
             ubci = input(
                 "Are you sure you want to revert your accounts info to the previous one? If yes, type 'yes'. anything else would be a no: ")
-            if ubci.lower == 'yes':
+            if ubci.lower() == 'yes':
                 self.name, self.age, self.nid, self.address = self.temp1, self.temp2, self.temp3, self.temp4
+                print("Account Reverted to Previous Settings!")
             else:
                 return
 
-        if command.lower() == 'show info':
+        elif command.lower() == 'show info':
             print(f"Your Name is {self.name}")
             print(f"Your NID is {self.nid}")
-            print(f"Balance is {__savingsAcc.opening_balance}")
-            return
+            print(f"Balance is {self.__balance}")
+            if self.__savingsAcc != None:
+                print(
+                    f"Savings Account Balance is {self.__savingsAcc.balance}")
 
-        if command.lower() == 'deposit money':
-            self.deposit(input("How much money you want to deposit? "))
-            return
+        elif command.lower() == 'deposit':
+            self.deposit(int(input("How much money you want to deposit? ")))
 
-        if command.lower() == 'exit':
-            print("Goodbye!")
-            exit()
+        elif command.lower() == 'deposit savings':
+            self.depositSavings(
+                int(input("How much money you want to deposit to your Savings Account? ")))
 
-        if command == "":
-            print("There is no Command")
-            return
+        elif command.lower() == 'withdraw':
+            self.withdraw(
+                int(input("How much money do you want to withdraw? ")))
+
+        elif command.lower() == 'withdraw savings':
+            self.withdrawSavings(
+                int(input("How much money do you want to withdraw in your Savings Account? ")))
+
+        elif command.lower() == 'exit':
+            print("Goodbye!", exit())
 
         else:
             print(f"The command \"{command}\" does not exist")
             return
 
     def deposit(self, amount):
+        print(f"Depositing {amount} Taka To Main Account")
+        self.__balance += amount
+
+    def depositSavings(self, amount):
         print(f"Depositing {amount} Taka To Savings Account")
-        __savingsAcc.deposit = amount
+        self.__savingsAcc.deposit += amount
+
+    def withdraw(self, amount):
+        warning = input(
+            f"Are you sure you want to withdraw {amount} Taka from your Account? ")
+        if warning == 'yes':
+            print(f"Withdrawing {amount} Taka from your Bank Account")
+            self.__balance -= amount
+
+    def withdrawSavings(self, amount):
+        warning = input(
+            f"Are you sure you want to withdraw {amount} Taka from your Savings Account? ")
+        if warning == 'yes':
+            print(f"Withdrawing {amount} Taka from your Savings Account")
+            self.__savingsAcc.balance -= amount
 
     def __command_enterer(self):
-        for i in range(999999):
-            command = input("=> ")
-            self.__CommandsManager(command)
+        while True:
+            try:
+                command = input("=> ")
+                self.__CommandsManager(command)
+            except KeyboardInterrupt:
+                print("\nYou exited the app with Keyboard shortcut. Goodbye!")
+                exit()
 
 
 class CustomerImpl(Customer):
     implementation = True
 
 
-me = Customer("Afif", 18, 19900399, "Shorashak")
+me = CustomerImpl(input("Enter Your Name: "), int(input("Enter Your Age: ")), int(
+    input("Enter your NID: ")), input("Enter Your Address: "))
