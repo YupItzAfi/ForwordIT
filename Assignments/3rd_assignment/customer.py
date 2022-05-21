@@ -1,6 +1,3 @@
-from accounts import SavingsAccount
-
-
 class Customer:
     name = ""
     age = 18
@@ -69,6 +66,7 @@ class Customer:
                 amount = int(
                     input("Enter how much you want as the opening amount: "))
                 self.__balance -= amount
+                from accounts import SavingsAccount
                 self.__savingsAcc = SavingsAccount(amount)
         elif command.lower() == 'revert info':
             ubci = input(
