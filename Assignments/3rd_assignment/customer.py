@@ -40,7 +40,6 @@ class Customer:
     deposit savings        --  Deposits money to your Savings Account
     withdraw               --  Withdraws your money.
     withdraw savings       --  Withdraws from your Saving Account.
-    delete account         --  Deletes your Account.
     exit                   --  Exits The Application.
 """)
 
@@ -59,12 +58,16 @@ class Customer:
                 "Your Account Information Updated Succesfully! To Revert Action Type 'revert info'")
 
         elif command.lower() == 'create savings account':
+            if self.__savingsAcc != None:
+                print("You already have a Savings Account.")
+                return
             if self.__balance < 10000:
                 print(
                     f"You don't have enough balance on your account to open a savings account. Required Minimum = 10,000 BDT, Your Balance = {self.__balance}")
             else:
+                amount = 10000
                 amount = int(
-                    input("Enter how much you want as the opening amount: "))
+                    input("Enter how much you want as the opening amount [10000]: "))
                 self.__balance -= amount
                 from accounts import SavingsAccount
                 self.__savingsAcc = SavingsAccount(amount)
@@ -112,22 +115,32 @@ class Customer:
         self.__balance += amount
 
     def depositSavings(self, amount):
-        print(f"Depositing {amount} Taka To Savings Account")
-        self.__savingsAcc.deposit += amount
+        if self.__savingsAcc == None:
+            print("You don't have a Savings Account.")
+            return
+        else:
+            print(f"Depositing {amount} Taka To Savings Account")
+            self.__savingsAcc.deposit += amount
 
     def withdraw(self, amount):
-        warning = input(
-            f"Are you sure you want to withdraw {amount} Taka from your Account? ")
-        if warning == 'yes':
-            print(f"Withdrawing {amount} Taka from your Bank Account")
-            self.__balance -= amount
+        if (self.__balance - amount) != 0:
+            warning = input(
+                f"Are you sure you want to withdraw {amount} Taka from your Account? ")
+            if warning == 'yes':
+                print(f"Withdrawing {amount} Taka from your Bank Account")
+                self.__balance -= amount
 
     def withdrawSavings(self, amount):
-        warning = input(
-            f"Are you sure you want to withdraw {amount} Taka from your Savings Account? ")
-        if warning == 'yes':
-            print(f"Withdrawing {amount} Taka from your Savings Account")
-            self.__savingsAcc.balance -= amount
+        if self.__savingsAcc == None:
+            print("You don't have a Savings Account.")
+        else:
+            if (self.__savingsAcc.balance - amount) != 0:
+                warning = input(
+                    f"Are you sure you want to withdraw {amount} Taka from your Savings Account? ")
+                if warning == 'yes':
+                    print(
+                        f"Withdrawing {amount} Taka from your Savings Account")
+                    self.__savingsAcc.balance -= amount
 
     def __command_enterer(self):
         while True:

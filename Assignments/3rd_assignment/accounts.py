@@ -1,11 +1,8 @@
-from random import random
-
-
-from random import random
+from random import randint
 
 
 class SavingsAccount:
-    account_number = random()
+    account_number = randint(000000000, 999999999)
     opening_balance = 0
     balance = 0
     deposit = 0
