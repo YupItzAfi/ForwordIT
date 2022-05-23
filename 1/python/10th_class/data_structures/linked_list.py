@@ -1,0 +1,1 @@
+/Users/afifannafie/Documents/ForwordIT/1/python/9th_class/data_structures/linked_list.py
