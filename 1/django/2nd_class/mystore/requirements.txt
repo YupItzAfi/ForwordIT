@@ -1,0 +1,6 @@
+asgiref==3.5.2
+configparser==5.2.0
+Django==4.0.5
+Pillow==9.1.1
+python-decouple==3.6
+sqlparse==0.4.2
