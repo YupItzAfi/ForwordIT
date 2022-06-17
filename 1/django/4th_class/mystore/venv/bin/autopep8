@@ -1,4 +1,4 @@
-#!/Users/afifannafie/Documents/ForwordIT/1/django/4th_class/mystore/venv/bin/python
+#!/Users/afifannafie/Documents/ForwordIT/1/django/4th_class/mystore/venv/bin/python3.10
 # -*- coding: utf-8 -*-
 import re
 import sys
