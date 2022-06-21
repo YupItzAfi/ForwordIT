@@ -24,7 +24,7 @@ class Category(models.Model):
     category_name = models.CharField(max_length=250, unique=True)
     description = models.TextField(max_length=1000, null=True, blank=True)
     image = models.ImageField(
-        upload_to="images/category/", width_field=300, height_field=300, max_length=300)
+        upload_to="images/category/", max_length=300, blank=True)
 
     def __str__(self):
         return self.category_name
@@ -41,9 +41,8 @@ class Product(models.Model):
         auto_now_add=True, null=True, blank=True)
     updated_at = models.DateTimeField(
         auto_now_add=True, null=True, blank=True)
-    image = models.ImageField(upload_to=".media/images/")
-    tag = models.ForeignKey(
-        Tag, null=True, on_delete=models.SET_NULL, related_name='tag')
+    image = models.ImageField(upload_to="images/products")
+    tag = models.ManyToManyField(Tag)
 
     def __str__(self):
         return self.product_name

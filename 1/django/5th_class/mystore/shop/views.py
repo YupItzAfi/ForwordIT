@@ -5,13 +5,16 @@ from .models import *
 
 
 def index(request):
-    customers = Customer
+    customers = Customer.objects.all()
     order = Order
-    cus_orders = order.customer.name
+    cus_orders = order.customer_id.field.name
 
     info = {
+        "name": "An Nafie",
+        "address": "1001@1001",
+        "phone": "69636232",
         "customers": customers,
-        "cus_orders": cus_orders
+        "cus_orders": cus_orders,
     }
     return render(request, "index.html", context=info)
 

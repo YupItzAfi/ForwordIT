@@ -20,7 +20,7 @@ class ProductAdmin(admin.ModelAdmin):
 
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['customer_id', 'product_id', 'status', 'date_created']
-    list_filter = ['date_created', 'product_id']
+    list_filter = ['date_created', 'status']
 
 
 admin.site.register(Category, CategoryAdmin)

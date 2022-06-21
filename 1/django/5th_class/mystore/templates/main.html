@@ -1,4 +1,3 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,13 +16,9 @@
       crossorigin="anonymous"
     />
     <!-- Others -->
-    <link
-      rel="shortcut icon"
-      type="image/png"
-      href="{% static 'favicon.ico' %}"
-    />
+    <link rel="shortcut/icon" type="image/ico" href="/favicon.ico" />
 
-    <title>Hello, world!</title>
+    <title>Home</title>
   </head>
   <body>
     <!--======================== NavBar ========================-->
@@ -89,25 +84,25 @@
       </div>
     </nav>
 
-    <!--======================== NavBar ========================-->
+    <!--======================== NavBar end ========================-->
 
     <!--======================== Thumbnail ========================-->
 
     <div class="container info">
-      <div class="row pt-5">
+      <div class="row mt-5">
+        {% for cus in customers %}
         <div class="card">
-          {% for cus in customer %}
           <div class="card-body p-5">
-            <h5>{{ name }}</h5>
-            <p>{{ phone }}</p>
-            <p>{{ address }}</p>
+            <h5>Name: {{ cus.name }}</h5>
+            Phone: {{ cus.phone }}
+            <br>Email: <small>{{ cus.email }}</small>
           </div>
-          {% endfor %}
         </div>
+        {% endfor %}
       </div>
     </div>
 
-    <!--======================== Thumbnail ========================-->
+    <!--======================== Thumbnail end ========================-->
 
     <!-- Optional JavaScript; choose one of the two! -->
 
