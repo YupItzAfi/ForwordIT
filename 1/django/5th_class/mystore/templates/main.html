@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -14,6 +15,12 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
       integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
       crossorigin="anonymous"
+    />
+    <!-- Others -->
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="{% static 'favicon.ico' %}"
     />
 
     <title>Hello, world!</title>
@@ -86,19 +93,16 @@
 
     <!--======================== Thumbnail ========================-->
 
-    <div class="container">
+    <div class="container info">
       <div class="row pt-5">
         <div class="card">
-          <div class="card-body">
+          {% for cus in customer %}
+          <div class="card-body p-5">
             <h5>{{ name }}</h5>
             <p>{{ phone }}</p>
             <p>{{ address }}</p>
           </div>
-          <div class="card-body">
-            <h5>{{ name }}</h5>
-            <p>{{ phone }}</p>
-            <p>{{ address }}</p>
-          </div>
+          {% endfor %}
         </div>
       </div>
     </div>

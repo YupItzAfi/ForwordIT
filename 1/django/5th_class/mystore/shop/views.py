@@ -1,15 +1,18 @@
 from django.shortcuts import render
+from .models import *
 
 # Create your views here.
 
-info = {
-    "Name": "Afif",
-    "Adress": "Kuwait",
-    "Phone": "2348888"
-}
-
 
 def index(request):
+    customers = Customer
+    order = Order
+    cus_orders = order.customer.name
+
+    info = {
+        "customers": customers,
+        "cus_orders": cus_orders
+    }
     return render(request, "index.html", context=info)
 
 
