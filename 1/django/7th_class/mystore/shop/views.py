@@ -45,8 +45,16 @@ def create_product(request):
     return render(request, "product_list.html", context=context)
 
 
-def product_details(request, px):
-    pass
+def product_details(request, pk):
+    product_details = Product.objects.get(id=pk)
+    product = Product.objects.all()
+
+    context = {
+        "product_details": product_details,
+        "product": product
+    }
+
+    return render(request, "product_details.html", context=context)
 
 
 def about(request):

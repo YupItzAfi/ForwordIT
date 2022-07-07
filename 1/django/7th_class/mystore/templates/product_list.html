@@ -10,32 +10,32 @@
         {% csrf_token %}
         {{ form.as_table }}
         <input type="submit" value="submit" class="btn btn-primary">
-    </form> 
+    </form>
 
     <a href="#" class="btn btn-secondary">Add Products</a>
     <table class="table table-striped">
-            <tr class="">
-                <th>id</th>
-                <th>Product</th>
-                <th>Category</th>
-                <th>Date Created</th>
-                <th>Action</th>
-            </tr>
-            {% for product in products %}
-            <tr>
-                <td class="table-primary">{{ product.id }}</td>
-                <td class="table-primary">{{ product.name }}</td>
-                <td class="table-primary">{{ product.category }}</td>
-                <td class="table-primary">{{ product.date_created }}</td>
-                <td class="table-primary">
-                    <div class="btn-group">
-                        <a type="submit" class="btn btn-secondary">Show</a>
-                        <a type="submit" class="btn btn-primary">Edit</a>
-                        <a type="submit" class="btn btn-danger">Delete</a>
-                    </div>
-                </td>
-            </tr>
-            {% endfor %}
+        <tr class="">
+            <th>id</th>
+            <th>Product</th>
+            <th>Category</th>
+            <th>Date Created</th>
+            <th>Action</th>
+        </tr>
+        {% for product in products %}
+        <tr>
+            <td class="table-primary">{{ product.id }}</td>
+            <td class="table-primary">{{ product.name }}</td>
+            <td class="table-primary">{{ product.category }}</td>
+            <td class="table-primary">{{ product.date_created }}</td>
+            <td class="table-primary">
+                <div class="btn-group">
+                    <a href="{% url 'product-details' product.id %}" type="submit" class="btn btn-secondary">Show</a>
+                    <a href="" type="submit" class="btn btn-primary">Edit</a>
+                    <a href="" type="submit" class="btn btn-danger">Delete</a>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
     </table>
 </div>
 
