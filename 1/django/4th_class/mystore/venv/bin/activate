@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/afifannafie/Documents/ForwordIT/1/django/4th_class/mystore/venv"
+VIRTUAL_ENV="/Users/afifannafie/Documents/ForwordIT/1/django/5th_class/mystore/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
@@ -67,3 +67,6 @@ fi
 if [ -n "${BASH:-}" -o -n "${ZSH_VERSION:-}" ] ; then
     hash -r 2> /dev/null
 fi
+
+DJANGO_SETTINGS_MODULE=core.settings
+
