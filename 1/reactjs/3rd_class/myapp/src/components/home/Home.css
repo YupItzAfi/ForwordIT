@@ -1,0 +1,22 @@
+.home {
+    max-width: 60%;
+    margin-left: 20%;
+}
+
+h1 {
+    color: #f1356d;
+    align-items: center;
+}
+
+p {
+    color: #f1356d;
+    font-family: Roboto, sans-serif;
+}
+
+button {
+    padding: 10px 15px 10px 15px;
+    background-color: green;
+    color: #f2f2f2;
+    border-radius: 5px;
+    border: 1px solid white;
+}

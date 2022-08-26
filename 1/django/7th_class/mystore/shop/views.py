@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from .models import *
 from .forms import ProductForm
 
@@ -28,9 +28,16 @@ def product_list(request):
     return render(request, "product_list.html")
 
 
+def product_list(request):
+    products = Product.objects.all()
+    context = {
+        "products": products,
+    }
+    return render(request, "product_list.html", context=context)
+
+
 def create_product(request):
     form = ProductForm
-    products = Product.objects.all()
 
     if request.method == 'POST':
         form = ProductForm(request.POST)
@@ -39,22 +46,49 @@ def create_product(request):
 
     context = {
         "form": form,
-        "products": products,
     }
 
-    return render(request, "product_list.html", context=context)
+    return render(request, "product_create.html", context=context)
 
 
 def product_details(request, pk):
     product_details = Product.objects.get(id=pk)
-    product = Product.objects.all()
 
     context = {
         "product_details": product_details,
-        "product": product
     }
 
     return render(request, "product_details.html", context=context)
+
+
+def product_update(request, pk):
+    product_update = Product.objects.get(id=pk)
+    form = ProductForm(instance=product_update)
+
+    if request.method == 'POST':
+        form = ProductForm(request.POST, instance=product_update)
+        if form.is_valid():
+            form.save()
+            return redirect('product-list')
+
+    context = {
+        "form": form,
+    }
+    return render(request, "product_create.html", context=context)
+
+
+def product_delete(request, pk):
+    product_delete = Product.objects.get(id=pk)
+
+    if request.method == 'POST':
+        product_delete.delete()
+        return redirect('product-list')
+
+    context = {
+        "product_item": product_delete,
+    }
+
+    return render(request, "product_list.html", context=context)
 
 
 def about(request):

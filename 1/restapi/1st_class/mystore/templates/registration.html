@@ -1,0 +1,99 @@
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!---- Include the above in your HEAD tag ---------->
+
+<form class="form-horizontal" method="post" action="" enctype="multipart/form-data">
+    {% csrf_token %}
+    <fieldset>
+
+        <!-- Form Name -->
+        <legend>Registration</legend>
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="name">{{ form.username.label }}</label>
+            <div class="col-md-4">
+                <!-- <input id="name" name="name" type="text" placeholder="Enter your name" class="form-control input-md"
+                    required=""> -->
+                {{ form.username }}
+
+            </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="email">{{ form.email.label }}</label>
+            <div class="col-md-4">
+                <!-- <input id="email" name="email" type="text" placeholder="Enter your email id"
+                    class="form-control input-md" required=""> -->
+                {{ form.email }}
+
+            </div>
+        </div>
+
+        <!-- Password input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="password">{{ form.first_name.label }}</label>
+            <div class="col-md-4">
+                <!-- <input id="password" name="password" type="password" placeholder="Enter a password"
+                    class="form-control input-md" required=""> -->
+                {{ form.first_name }}
+
+            </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="contact">{{ form.last_name.label }}</label>
+            <div class="col-md-4">
+                <!-- <input id="contact" name="contact" type="text" placeholder="Enter your contact no."
+                    class="form-control input-md" required=""> -->
+                {{ form.last_name }}
+
+            </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="street">{{ form.password1.label }}</label>
+            <div class="col-md-4">
+                <!-- <input id="street" name="street" type="text" placeholder="Enter your street"
+                    class="form-control input-md" required=""> -->
+                {{ form.password1 }}
+
+            </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="area">{{ form.password2.label }}</label>
+            <div class="col-md-4">
+                <!-- <input id="area" name="area" type="text" placeholder="Enter your area" class="form-control input-md" -->
+                <!-- required=""> -->
+                {{ form.password2 }}
+
+            </div>
+        </div>
+
+        <!-- Button -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="signup"></label>
+            <div class="col-md-4">
+                <input type="submit" value="Submit" name="save" class="btn btn-primary">
+            </div>
+        </div>
+
+    </fieldset>
+</form>
+
+{{ form.errors }}
+
+<!-- <form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for field in form %}
+    {{ field }}
+    {% endfor %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit" name="save">
+</form> -->
