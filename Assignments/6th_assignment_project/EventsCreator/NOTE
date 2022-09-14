@@ -1,0 +1,3 @@
+@3:02: This was done (so far) without any help from videos or anything, etc.
+
+@3:12: OK now the only help i got was that i went to django/9th_class/mystore/core/urls.py and rediscovered how to go to index.py using "include", i totally somehow forgot about it.

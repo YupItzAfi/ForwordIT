@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+
+* {
+  margin: 0;
+  font-family: "Quicksand", serif;
+  max-width: 100%;
+  align-items: center;
+}
+
+.blog-list button {
+  margin-top: 10px;
+  background-color: #f1356d;
+  font-family: "Quicksand", serif;
+  padding: 10px 15px 10px 15px;
+}
+
+.blog-list button:hover {
+  background-color: #a12349;
+}
