@@ -39,6 +39,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'events',
+
+    'django.contrib.sites',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.twitter',
 ]
 
 MIDDLEWARE = [
@@ -65,6 +76,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -102,6 +114,39 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '751592320033-u0rp67gmsoqj1kjutjl52j7s7g5ec5k7.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        }
+    },
+    'github': {
+        'SCOPE': [
+            'user',
+            'repo',
+            'read:org',
+        ],
+    },
+}
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+ACCOUNT_EMAIL_VERIFICATION = "optional"
+LOGIN_REDIRECT_URL = "/"
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
@@ -119,7 +164,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATIC_ROOT = os.path.join(BASE_DIR, STATIC_URL)
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static/images'),
     os.path.join(BASE_DIR, 'static/thumbnail'),
@@ -132,3 +177,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_URL)
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STRIPE_PUBLIC_KEY = "pk_test_51LisDUA7Ajeyc7eXkuQigqZ3Hy2AG2StFyGEw94g0xco39aLBqOc1uZ047UPTZZz7KpiTgnw62q0qrERyIZvXITR00GiyV1nZJ"
+STRPE_SECRET_KEY = "sk_test_51LisDUA7Ajeyc7eXyxEfNgq473ldcTXjCxZBKMjMrVsC1SEYPYfekumug5tJTUAOSphPFX6PCKerMZ7JwbU1qOY500IZZOyz6I"
+STRPE_WEBHOOK_SECRET = ""
