@@ -26,18 +26,18 @@
     <div class="card col-5" style="align-items: center; margin-top: 50px; align-content:center;">
         <div class="card-body">
             <h1 style="text-align: center; margin:20px">Login</h1>
-            <form class="form active" enctype="multipart/form-data">
+            <form class="form active" enctype="multipart/form-data" method="post" action="">
                 {% csrf_token %}
                 <!-- Email input -->
                 <div class="form-outline mb-4">
-                    <label class="form-label" for="email">Email address</label>
-                    <input type="email" class="form-control" />
+                    <label class="form-label" for="username">Email address or Name</label>
+                    <input type="text" name="username" id="username" class="form-control" />
                 </div>
 
                 <!-- Password input -->
                 <div class="form-outline mb-4">
                     <label class="form-label" for="password">Password</label>
-                    <input type="password" class="form-control" />
+                    <input type="password" name="password" id="password" class="form-control" />
                 </div>
 
                 <!-- 2 column grid layout for inline styling -->
@@ -57,9 +57,15 @@
                 </div>
 
                 <!-- Submit button -->
-                <button type="button" class="btn btn-primary btn-block mb-4" style="margin-left: 100px;"
+                <!-- <button type="button" class="btn btn-primary btn-block mb-4" style="margin-left: 100px;"
                     form="submit">Sign
-                    in</button>
+                    in</button> -->
+                <div class="row mb-4">
+                    <div class="col d-flex justify-content-center">
+                        <input type="submit" value="Sign in" name="save" class="btn btn-primary">
+                    </div>
+
+                </div>
 
                 <!-- Register buttons -->
                 <div class="text-center">

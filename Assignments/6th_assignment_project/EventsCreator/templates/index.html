@@ -36,17 +36,20 @@
                     <div class="dropdown">
                         <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
-                            <a class="nav-link mx-2" href=""><i class="fa-solid fa-receipt"></i>Bookings</a>
-                            <div class="dropdown">
-                                <ul class="dropdown-menu">
-                                    {% for event in events %}
-                                    <li>
-                                        <img src="{{ event.image }}" alt="Event's Image">
-                                        <b>{{ event.name }}</b>
-                                    </li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
+                            <i class="fa-solid fa-receipt"></i>
+                            Bookings
+                        </button>
+                        <div class="dropdown">
+                            <ul class="dropdown-menu">
+                                {% for event in events %}
+                                <li>
+                                    <img src="{{ event.image }}" alt="Event's Image">
+                                    <b>{{ event.name }}</b>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item ms-3">
                     <div class="dropdown">
@@ -68,16 +71,29 @@
 {% endblock %}
 
 {% block content %}
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.2.0/css/all.css" />
+<!-- Google Fonts Roboto -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+
 <div class="row mt-5 justify-content-center">
-    {% for event in events %}
-    <div class="card card-body col-md">
-        <h1>{{ events.name }}</h1>
-        <hr />
-        <p>Address: {{ events.address_or_venue_name }}</p>
-        <p>Category: {{ events.category }}</p>
-        <p>Price: {{ events.price }}</p>
-        <a type="button" class="btn btn-success" href="http://127.0.0.1:8000/booking">Book Now</a>
+    {% for events in event %}
+    <div class="card col-5">
+        <div class="card-body col-md">
+            <h1>{{ events.title }}</h1>
+            <hr />
+            <p><i class="fa-solid fa-location-dot"></i> Address: {{ events.address_or_venue_name }}</p>
+            <p><i class="fa-solid fa-list"></i> Category: {{ events.category }}</p>
+            <p><i class="fa-solid fa-coins"></i> Price: ${{ events.price }}</p>
+            <p><small><i class="fa-solid fa-user"></i> User: {{ events.user }}</small></p>
+            {% if request.user.username == events.user %}
+            <a type="button" class="btn btn-success" href="http://127.0.0.1:8000/booking">Book Now</a>
+            {% else %}
+            <input class="btn btn-light" type="button" name="Edit" value="Edit" />
+            {% endif %}
+        </div>
     </div>
+
     {% endfor %}
 </div>
 {% endblock %}

@@ -27,13 +27,14 @@
     <div class="card col-5" style="align-items: center; margin-top: 50px; align-content:center;">
         <div class="card-body align-items-center">
             <h1 style="text-align: center; margin:20px">Registration</h1>
-            <form class="form active" enctype="multipart/form-data">
+            <form class="form active" enctype="multipart/form-data" method="post" action="">
                 {% csrf_token %}
                 <!-- Name input -->
                 <div class="form-outline mb-4">
                     <label class="form-label" for="name">Name</label>
                     <input type="text" id="form2Example0" class="form-control" name="name" required />
                 </div>
+
 
                 <!-- Email input -->
                 <div class="form-outline mb-4">
@@ -53,17 +54,19 @@
                     <input type="password" id="form2Example3" class="form-control" name="password2" required />
                 </div>
 
+
                 <!-- 2 column grid layout for inline styling -->
                 <div class="row mb-4">
                     <div class="col d-flex justify-content-center">
-                        <button type="button" class="btn btn-primary btn-block mb-4" name="register"
-                            form="submit">Register</button>
+                        <input type="button" class="btn btn-primary btn-block mb-4" value="Register" name="register"
+                            form="submit">
                     </div>
 
                 </div>
 
                 <!-- Submit button -->
 
+                {{ form.errors.as_ul }}
             </form>
         </div>
     </div>

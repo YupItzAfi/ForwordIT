@@ -12,37 +12,67 @@
     <div class="card col-5" style="align-items: center; margin-top: 50px; align-content:center;">
         <div class="card-body align-items-center">
             <h1 style="text-align: center; margin:20px">Add Events</h1>
-            <form class="form active" enctype="multipart/form-data">
+            <form class="form active" enctype="multipart/form-data" method="post" action="">
                 {% csrf_token %}
                 <!-- Name input -->
                 <div class="form-outline mb-4">
-                    <label class="form-label" for="name">Events Name</label>
-                    <input type="text" class="form-control" name="name" required />
+                    <label class="form-label" for="title">Event Title</label>
+                    <input type="text" class="form-control" id="title" name="title" required />
                 </div>
 
-                <!-- Email input -->
-                <div class="form-outline mb-4">
+                <!-- Category input -->
+                <!-- <div class="form-outline mb-4">
                     <label class="form-label" for="email"></label>
-                    <input type="email" class="form-control" name="email" required />
+                    <input type="" class="form-control" id="password" name="email" required />
+                </div> -->
+
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="category">Category</label>
+                    <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    </button>
+                    <div class="dropdown">
+                        <ul class="dropdown-menu">
+                            <li>
+                                <p class="dropdown-item">{{ category.name }}</p>
+                            </li>
+                            <hr />
+
+                        </ul>
+                    </div>
                 </div>
 
-                <!-- Password input -->
+                <!-- Event type input -->
                 <div class="form-outline mb-4">
-                    <label class="form-label" for="password">Password</label>
-                    <input type="password" class="form-control" name="password" required />
+                    <label class="form-label" for="event_type">Event Type</label>
+                    <!-- <input type="password" class="form-control" id="password" name="password" required /> -->
+                    <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    </button>
+                    <div class="dropdown">
+                        <ul class="dropdown-menu">
+                            <li>
+                                <p class="dropdown-item">hvucdxdx</p>
+                            </li>
+                            <hr />
+                            <li>
+                                <p class="dropdown-item">hvucdxdx</p>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
-                <!-- Re-enter Password input -->
-                <div class="form-outline mb-4">
+                <!--  Password input -->
+                <!-- <div class="form-outline mb-4">
                     <label class="form-label" for="password">Re-enter Password</label>
-                    <input type="password" class="form-control" name="password2" required />
-                </div>
+                    <input type="password" class="form-control" id="password" name="password2" required />
+                </div> -->
+
 
                 <!-- 2 column grid layout for inline styling -->
                 <div class="row mb-4">
                     <div class="col d-flex justify-content-center">
-                        <button type="button" class="btn btn-primary btn-block mb-4" name="register"
-                            form="submit">Register</button>
+                        <input type="submit" value="Create" name="save" class="btn btn-primary" form="submit">
                     </div>
 
                 </div>

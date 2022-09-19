@@ -3,7 +3,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
-from .models import Event, User
+from .models import Event, User, Categorie
+from .forms import *
+from .decorators import *
 # Create your views here.
 
 
@@ -20,7 +22,7 @@ def home(request):
     return render(request, 'index.html', context=context)
 
 
-def login(request):
+def log_in(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -37,17 +39,39 @@ def login(request):
 
 
 @login_required(login_url="/login")
-def logout(request):
+def log_out(request):
     logout(request)
 
 
+@unauthenticated_user
 def registration(request):
-    return render(request, 'registration.html')
+    form = UserCreationForm()
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+
+            user = authenticate(request, username=username, password=password)
+            login(request, user)
+        return redirect('home')
+    context = {
+        "form": form
+    }
+    return render(request, 'registration.html', context=context)
 
 
 @login_required(login_url="/login")
 def add_events(request):
-    return render(request, 'create-events.html')
+    category = Categorie.objects.all()
+    event = Event
+    context = {
+        "category": category,
+        "event": event.objects.all(),
+    }
+    return render(request, 'create-events.html', context=context)
 
 
 @login_required(login_url="/login")
