@@ -3,10 +3,6 @@
 {% block title %}Home{% endblock %}
 
 {% block navbar %}
-<!-- Font Awesome -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.2.0/css/all.css" />
-<!-- Google Fonts Roboto -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
 
 <style>
     .navbar-light .navbar-nav .nav-link {
@@ -18,11 +14,10 @@
 <nav class="navbar navbar-expand-lg fixed-top bg-light navbar-light">
     <div class="container">
         {% block home_title %}<a class="navbar-brand" href="/">Home</a>{% endblock %}
-        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
-            data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <i class="fas fa-bars"></i>
-        </button>
+        <button class="navbar-toggler" type="menu" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i></button>
+        {% if request.user.username != "" %}
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto align-items-center">
                 <li class="nav-item">
@@ -34,36 +29,56 @@
                 </li> -->
                 <li class="nav-item">
                     <div class="dropdown">
-                        <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
+                        <button class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa-solid fa-receipt"></i>
                             Bookings
                         </button>
-                        <div class="dropdown">
-                            <ul class="dropdown-menu">
+                        <ul class="dropdown-menu">
+                            <li>
+                                {% if ticket_booking.objects.all == none %}
+                                <p style="margin:0px 0px 0px 10px"> No Bookings Yet..</p>
+                                {% else %}
                                 {% for event in events %}
-                                <li>
-                                    <img src="{{ event.image }}" alt="Event's Image">
-                                    <b>{{ event.name }}</b>
-                                </li>
+                                <div class="dropdown-item">
+                                    <b class="dropdown-item-text">{{ event.title }}</b>
+                                    <b class="dropdown-item-text"><small>{{ event.price }}</small></b>
+                                </div>
                                 {% endfor %}
-                            </ul>
-                        </div>
+                                {% endif %}
+                            </li>
+                        </ul>
                     </div>
                 </li>
                 <li class="nav-item ms-3">
                     <div class="dropdown">
-                        <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
+                        <button class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa-solid fa-user"></i>
                             {{ request.user.username }}
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="http://127.0.0.1:8000/accounts/logout">Logout</a></li>
+                            <li>
+                                <form action="" method="post" enctype="multipart/form-data" class="form-actions">
+                                    {% csrf_token %}
+                                    <label class="form-label" for="currency">Currencies:</label>
+                                    <div id="currency">
+                                    {% for currencie in currencies %}
+                                    <button type="submit" name="currency_name" id="{{ currencie.name }}"
+                                        class="btn btn-light dropdown-item" value="{{ currencie.name }}">
+                                        {{ currencie.name }}
+                                    </button>
+                                    {% endfor %}
+                                    </div>
+                                </form>
+                            </li>
+                            <hr />
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
                         </ul>
                     </div>
                 </li>
             </ul>
+            {% else %}
+            <a class="btn btn-black" href="{% url 'login' %}">Sign in</a>
+            {% endif %}
         </div>
     </div>
 </nav>
@@ -71,29 +86,62 @@
 {% endblock %}
 
 {% block content %}
-<!-- Font Awesome -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.2.0/css/all.css" />
-<!-- Google Fonts Roboto -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
-
-<div class="row mt-5 justify-content-center">
-    {% for events in event %}
-    <div class="card col-5">
-        <div class="card-body col-md">
-            <h1>{{ events.title }}</h1>
-            <hr />
-            <p><i class="fa-solid fa-location-dot"></i> Address: {{ events.address_or_venue_name }}</p>
-            <p><i class="fa-solid fa-list"></i> Category: {{ events.category }}</p>
-            <p><i class="fa-solid fa-coins"></i> Price: ${{ events.price }}</p>
-            <p><small><i class="fa-solid fa-user"></i> User: {{ events.user }}</small></p>
-            {% if request.user.username == events.user %}
-            <a type="button" class="btn btn-success" href="http://127.0.0.1:8000/booking">Book Now</a>
-            {% else %}
-            <input class="btn btn-light" type="button" name="Edit" value="Edit" />
-            {% endif %}
+{% csrf_token %}
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button class="btn btn-primary">Save changes</button>
+            </div>
         </div>
     </div>
-
-    {% endfor %}
 </div>
+{% for event in events %}
+<div class="row mt-5 justify-content-center">
+    <div class="card col-5" style="margin-top: 15px;">
+        <div class="card-body col-md">
+            <h1>{{ event.title }}</h1>
+            <hr />
+            <p><i class="fa-solid fa-location-dot"></i> Address: {{ event.venue_or_address_name }}</p>
+            <p><i class="fa-solid fa-list"></i> Category: {{ event.category }}</p>
+            <p><i class="fa-solid fa-coins"></i> Price: ${{ event.price }}</p>
+            <p><small><i class="fa-solid fa-user"></i> User: {{ event.user }}</small></p>
+            {% if event.quantity != 0 %}
+            {% if request.user == event.user or 'admin' in group %}
+            <a class="btn btn-light" name="edit" href="{% url 'edit' event.id %}">Edit</a>
+            <a class="btn btn-danger" name="delete" href="{% url 'delete' event.id %}">Delete</a>
+            {% if currency == none and 'admin' in group %}
+            <a class="btn btn-success btn-block" href="{% url 'ticket_booking' event.id default_currency %}">Book
+                Now</a>
+            {% elif currency != none %}
+            <a class="btn btn-success btn-block" href="{% url 'ticket_booking' event.id currency.name %}">Book Now</a>
+            {% endif %}
+            {% elif currency == none and request.user.username != "" %}
+            <a class="btn btn-success btn-block" href="{% url 'ticket_booking' event.id default_currency %}">Book
+                Now</a>
+            {% elif currency != none and request.user.username != "" %}
+            <a class="btn btn-success btn-block" href="{% url 'ticket_booking' event.id currency.name %}">Book Now</a>
+            {% endif %}
+            {% else %}
+            {% if request.user == event.user or 'admin' in group %}
+            <a class="btn btn-light" name="edit" href="{% url 'edit' event.id %}">Edit</a>
+            <a class="btn btn-danger" name="delete" href="{% url 'delete' event.id %}">Delete</a>
+            {% endif %}
+            <button class="btn btn-light disabled">Booked out</button>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+
+{% endfor %}
 {% endblock %}

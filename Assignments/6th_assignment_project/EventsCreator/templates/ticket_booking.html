@@ -3,12 +3,56 @@
 {% block title %}Ticket Booking | Events{% endblock %}
 
 {% block content %}
+<script type="text/javascript" src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+<script type="text/javascript" src="https://js.stripe.com/v3/"></script>
+
+
 <div class="row mt-5 justify-content-center">
-    <div class="card col-5">
-        <div class="card-body">
-            <h1>Book Ticket</h1>
-            <p>Are you sure you want to book {{ }}</p>
+    <div class="card col-5 align-content-center align-items-center" style="margin-top: 50px;">
+        <div class="card-body align-items-center">
+            <form action="" method="POST" enctype="multipart/form-data" id="checkout-button">
+                {% csrf_token %}
+                <h1 style="text-align: center; margin:20px">Book Ticket</h1>
+                <p>Are you sure you want to book <b>{{ event.title }}</b>?</p>
+                <p><i class="fa-solid fa-coins"></i> Price: <b>${{ event.price }}</b></p>
+                <p><i class="fa-solid fa-globe"></i> Currency: <b>{{ proper_currency }}</b></p>
+
+                <div class="form-outline mb-4">
+                    <label class="form-control-plaintext" for="event_quantity">Quantity:</label>
+                    <input type="number" id="event_quantity" class="form-control" min="1" max="{{ event.quantity }}" placeholder="Amount" name="quantity" required />
+                </div>
+
+                <div class="col d-flex justify-content-center" style="margin-top: 25px;">
+                    <input type="submit" class="btn btn-success" value="Checkout">
+                </div>
+            </form>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    var stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
+    var checkoutButton = document.getElementById('checkout-button');
+    checkoutButton.addEventListener("submit", function () {
+        event.preventDefault()
+        fetch("{% url 'create-checkout-session' event.id currency.name %}", {
+            method: "POST",
+            headers: {
+                'X-CSRFToken': csrftoken
+            },
+        })
+            .then(function (response) {
+                return response.json();
+            }).then(function (session) {
+                return stripe.redirectToCheckout({ sessionId: session.id });
+            }).then(function (result) {
+                if (result.error) {
+                    alert(result.error.message);
+                }
+            }).catch(function (error) {
+                console.error(error);
+            });
+    });
+</script>
 {% endblock %}

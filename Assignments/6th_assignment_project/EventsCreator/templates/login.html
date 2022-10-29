@@ -7,9 +7,8 @@
 <nav class="navbar navbar-expand-lg fixed-top bg-light navbar-light">
     <div class="container">
         <a class="navbar-brand" href="/">Home</a>
-        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
-            data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
+        <button class="navbar-toggler" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-bars"></i>
         </button>
     </div>
@@ -18,51 +17,46 @@
 {% endblock %}
 
 {% block content %}
-<!-- Font Awesome -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.2.0/css/all.css" />
-<!-- Google Fonts Roboto -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
 <div class="row mt-5" style="justify-content: center;">
     <div class="card col-5" style="align-items: center; margin-top: 50px; align-content:center;">
         <div class="card-body">
             <h1 style="text-align: center; margin:20px">Login</h1>
-            <form class="form active" enctype="multipart/form-data" method="post" action="">
+            <form class="form active" enctype="multipart/form-data" method="post" autocomplete="on">
                 {% csrf_token %}
                 <!-- Email input -->
                 <div class="form-outline mb-4">
                     <label class="form-label" for="username">Email address or Name</label>
                     <input type="text" name="username" id="username" class="form-control" />
+                    <p class="text-danger">{{ errors }}</p>
                 </div>
 
                 <!-- Password input -->
                 <div class="form-outline mb-4">
                     <label class="form-label" for="password">Password</label>
                     <input type="password" name="password" id="password" class="form-control" />
+                    <p class="text-danger">{{ errors }}</p>
                 </div>
 
                 <!-- 2 column grid layout for inline styling -->
                 <div class="row mb-4">
                     <div class="col d-flex justify-content-center">
                         <!-- Checkbox -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" checked />
-                            <label class="form-check-label" for="remember-me"> Remember me </label>
+                        <div class="form-actions">
+                            <input class="checkbox" type="checkbox" name="remember-me" id="remember-me"
+                            checked />
                         </div>
+                        <label class="form-check-label" for="remember-me" style="margin-left:5px"> Remember me </label>
                     </div>
 
                     <div class="col">
                         <!-- Simple link -->
-                        <a href="#!">Forgot password?</a>
+                        <a href="{% url 'account_reset_password' %}">Forgot password?</a>
                     </div>
                 </div>
 
-                <!-- Submit button -->
-                <!-- <button type="button" class="btn btn-primary btn-block mb-4" style="margin-left: 100px;"
-                    form="submit">Sign
-                    in</button> -->
                 <div class="row mb-4">
                     <div class="col d-flex justify-content-center">
-                        <input type="submit" value="Sign in" name="save" class="btn btn-primary">
+                        <input type="submit" value="Sign in" name="save" class="btn btn-primary btn-block">
                     </div>
 
                 </div>
@@ -71,23 +65,19 @@
                 <div class="text-center">
                     <p>Not a member? <a href="{% url 'register' %}">Register</a></p>
                     <p>or sign up with:</p>
-                    <a type="button" class="btn btn-link btn-floating mx-1"
-                        href="http://127.0.0.1:8000/accounts/facebook/login/?process=login">
+                    <a class="btn btn-link btn-floating mx-1" href="{% url 'facebook_login' %}?process=login">
                         <i class="fab fa-facebook-f"></i>
                     </a>
 
-                    <a type="button" class="btn btn-link btn-floating mx-1"
-                        href="http://127.0.0.1:8000/accounts/google/login/?process=login">
+                    <a class="btn btn-link btn-floating mx-1" href="{% url 'google_login' %}?process=login">
                         <i class="fab fa-google"></i>
                     </a>
 
-                    <a type="button" class="btn btn-link btn-floating mx-1"
-                        href="http://127.0.0.1:8000/accounts/twitter/login/?process=login">
+                    <a class="btn btn-link btn-floating mx-1" href="{% url 'twitter_login' %}?process=login">
                         <i class="fab fa-twitter"></i>
                     </a>
 
-                    <a type="button" class="btn btn-link btn-floating mx-1"
-                        href="http://127.0.0.1:8000/accounts/github/login/?process=login">
+                    <a class="btn btn-link btn-floating mx-1" href="{% url 'github_login' %}?process=login">
                         <i class="fab fa-github"></i>
                     </a>
                 </div>

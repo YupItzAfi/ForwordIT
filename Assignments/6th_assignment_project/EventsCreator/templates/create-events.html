@@ -3,20 +3,18 @@
 {% block title %}Create Events | Events{% endblock %}
 
 {% block content %}
-<!-- Font Awesome -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.2.0/css/all.css" />
-<!-- Google Fonts Roboto -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
-
-<div class="row mt-5" style="justify-content: center;">
-    <div class="card col-5" style="align-items: center; margin-top: 50px; align-content:center;">
+<div class="row mt-5 justify-content-center">
+    <div class="card col-5 align-items-center align-content-center" style="margin-top:25px">
         <div class="card-body align-items-center">
-            <h1 style="text-align: center; margin:20px">Add Events</h1>
+            <h1 style="text-align: center;">Add Events</h1>
+            <hr>
             <form class="form active" enctype="multipart/form-data" method="post" action="">
                 {% csrf_token %}
+                <small style="color: rgba(31, 27, 45, 0.689)"><span class="text-danger small">*</span> Is
+                    required</small>
                 <!-- Name input -->
                 <div class="form-outline mb-4">
-                    <label class="form-label" for="title">Event Title</label>
+                    <label class="form-label" for="title"><span class="text-danger">* </span>Event Title</label>
                     <input type="text" class="form-control" id="title" name="title" required />
                 </div>
 
@@ -27,38 +25,59 @@
                 </div> -->
 
                 <div class="form-outline mb-4">
-                    <label class="form-label" for="category">Category</label>
-                    <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                    </button>
+                    <label class="form-label" for="category"><span class="text-danger">* </span>Category</label>
                     <div class="dropdown">
-                        <ul class="dropdown-menu">
-                            <li>
-                                <p class="dropdown-item">{{ category.name }}</p>
-                            </li>
-                            <hr />
-
-                        </ul>
+                        <select class="btn btn-light form-select" style="text-align:left" data-bs-toggle="dropdown"
+                            aria-expanded="false" id="category" required>
+                            <option selected disabled value="">Choose one</option>
+                            {% for categories in category %}
+                            <option class="dropdown-item" value="{{ categories.id }}">{{ categories.category_name }}
+                            </option>
+                            {% endfor %}
+                        </select>
                     </div>
+                    <a href="{% url 'create-object' model_name='Category' %}"><i class="fa-solid fa-plus"></i></a>
                 </div>
 
                 <!-- Event type input -->
                 <div class="form-outline mb-4">
-                    <label class="form-label" for="event_type">Event Type</label>
-                    <!-- <input type="password" class="form-control" id="password" name="password" required /> -->
-                    <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                    </button>
-                    <div class="dropdown">
-                        <ul class="dropdown-menu">
-                            <li>
-                                <p class="dropdown-item">hvucdxdx</p>
-                            </li>
-                            <hr />
-                            <li>
-                                <p class="dropdown-item">hvucdxdx</p>
-                            </li>
-                        </ul>
+                    <label class="form-label" for="event_type"><span class="text-danger">* </span>Event Type</label>
+                    <div class="dropdown" >
+                        <select class="btn btn-light form-select" style="text-align:left" data-bs-toggle="dropdown"
+                            aria-expanded="false" id="event_type" required>
+                            <option selected disabled value="">Choose one</option>
+                            {% for event_types in event_type %}
+                            <option class="dropdown-item" value="{{ event_types }}">{{ event_types }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Stream type input -->
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="stream"><span class="text-danger">* </span>Stream Type</label>
+                    <div class="dropdown" >
+                        <select class="btn btn-light form-select" style="text-align:left" data-bs-toggle="dropdown"
+                            aria-expanded="false" id="stream" required>
+                            <option selected disabled value="">Choose one</option>
+                            {% for streams in stream %}
+                            <option class="dropdown-item-text" value="{{ streams }}">{{ streams }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Stream type input -->
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="category"><span class="text-danger">* </span>Stream Type</label>
+                    <div class="dropdown" >
+                        <select class="btn btn-light form-select" style="text-align:left" data-bs-toggle="dropdown"
+                            aria-expanded="false" id="category" required>
+                            <option selected disabled value="">Choose one</option>
+                            {% for streams in stream %}
+                            <option class="dropdown-item-text" value="{{ streams }}">{{ streams }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                 </div>
 
@@ -66,20 +85,44 @@
                 <!-- <div class="form-outline mb-4">
                     <label class="form-label" for="password">Re-enter Password</label>
                     <input type="password" class="form-control" id="password" name="password2" required />
-                </div> -->
+                    </div> -->
 
 
                 <!-- 2 column grid layout for inline styling -->
-                <div class="row mb-4">
-                    <div class="col d-flex justify-content-center">
-                        <input type="submit" value="Create" name="save" class="btn btn-primary" form="submit">
-                    </div>
-
+                <div class="col d-flex justify-content-center">
+                    <input type="submit" value="Create" name="save" class="btn btn-primary btn-block">
                 </div>
 
                 <!-- Submit button -->
 
             </form>
+            <script>
+                var selects = document.querySelectorAll('select');
+                var select = []
+
+                for (var i = 0; i < selects.length; i++) {
+                    selects[i].addEventListener('change', changeWidth);
+                }
+
+                function changeWidth(e) {
+                    var select = e.target;
+                    var o = select.options[select.selectedIndex];
+                    var s = document.createElement('span');
+
+                    s.textContent = o.textContent;
+
+                    var ostyles = getComputedStyle(o);
+                    s.style.fontFamily = ostyles.fontFamily;
+                    s.style.fontStyle = ostyles.fontStyle;
+                    s.style.fontWeight = ostyles.fontWeight;
+                    s.style.fontSize = ostyles.fontSize;
+
+                    document.body.appendChild(s);
+
+                    select.style.width = (s.offsetWidth + 60) + 'px';
+                    document.body.removeChild(s);
+                }
+            </script>
         </div>
     </div>
 </div>

@@ -1,7 +1,50 @@
 {% extends 'main.html' %}
 
-{% block title %}Refund | Events{% endblock %}
+{% block title %}Refund {{ event.title }} | Events{% endblock %}
 
 {% block content %}
+<div class="row mt-5" style="justify-content: center;">
+    <div class="card col-5" style="align-items: center; margin-top: 50px; align-content:center;">
+        <div class="card-body align-items-center">
+            <h1 style="text-align: center; margin:20px">Refund: {{ event.title }}</h1>
+            <hr>
+            <form class="form active" enctype="multipart/form-data" method="post" action="">
+                {% csrf_token %}
+                <b>Are you sure you want to refund {{ event.title }}?</b>
 
+                <select class="form-select" data-bs-toggle="dropdown" aria-expanded="false" name="event_id" required hidden>
+                    <option class="dropdown-item" value="{{ event_id }}" selected>{{ event.title }}</option>
+                </select>               
+
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="refund_reason"><span class="text-danger">* </span>Refund
+                        reason</label>
+                        <select class="btn btn-light form-select" style="text-align:left" data-bs-toggle="dropdown"
+                            aria-expanded="false" name="reason" id="refund_reason" required>
+                            <option selected disabled value="">Choose one</option>
+                            {% for refunds in refund_reasons %}
+                            <option class="dropdown-item" value="{{ refunds.value }}">{{ refunds.label }}</option>
+                            {% endfor %}
+                        </select>
+                        <p class="text-danger">{{ form.reason.errors.as_text }}</p>
+                </div>
+
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="demand_date"><span class="text-danger">* </span>Demand date</label>
+                    <input type="date" class="form-control" name="demand_date" id="demand_date">
+                    <p class="text-danger">{{ form.demand_date.errors.as_text }}</p> 
+                </div>
+
+                {{ form.errors }}
+
+                <div class="col d-flex justify-content-center">
+                    <input type="submit" class="btn btn-primary btn-block" value="Request Refund" id="req_refund">
+                </div>
+            </form>
+            <script type="text/javascript">
+                document.getElementById('demand_date').minDate = new Date().toLocaleDateString('en-kw');
+            </script>
+        </div>
+    </div>
+</div>
 {% endblock %}

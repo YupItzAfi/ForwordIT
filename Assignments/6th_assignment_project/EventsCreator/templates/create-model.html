@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+
+{% block title %}Create {{ model_name }} | Events{% endblock %}
+
+{% block content %}
+<div class="row mt-5" style="justify-content: center;">
+    <div class="card col-5" style="align-items: center; margin-top: 50px; align-content:center;">
+        <div class="card-body align-items-center">
+            <form class="form active" enctype="multipart/form-data" method="POST" action="">
+                {% csrf_token %}
+                <h1 style="text-align: center; margin:20px">Create: {{ model_name }}</h1>
+                <hr>
+                {{ form.as_p }}
+                <div class="col d-flex justify-content-center">
+                    <input type="submit" class="btn btn-primary btn-block" value="Create">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

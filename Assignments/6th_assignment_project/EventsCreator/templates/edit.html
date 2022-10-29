@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+
+{% block title %}Edit {{ event.title }} | Events{% endblock %}
+
+{% block content %}
+<form action="" method="post" enctype="multipart/form-data" class="form-actions">
+    {% csrf_token %}
+    <div class="row mt-5 justify-content-center">
+        <div class="card col-5 align-content-center align-items-center" style="margin-top: 50px;">
+            <div class="card-body align-items-center">
+                <h1>Edit: {{ event.title }}</h1>
+                <hr>
+                {{ form.as_p }}
+                <div class="col d-flex justify-content-center">
+                    <input type="submit" class="btn btn-primary btn-block" value="Edit" name="edit">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}
